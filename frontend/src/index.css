@@ -5,3 +5,8 @@
 a.active hr{
   display: block
 }
+
+.mobile-menu a.active {
+  background-color: black;
+  color: white;
+}

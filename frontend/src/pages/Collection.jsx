@@ -28,9 +28,9 @@ const Collection = () => {
     }
   };
 
-  const applyFilter = () => {
-    let productsCopy = products.slice(); //to create a copy of products
+  let productsCopy = products.slice(); //to create a copy of products
 
+  const applyFilter = () => {
     if (category.length > 0) {
       productsCopy = productsCopy.filter((prod) =>
         category.includes(prod.category)
@@ -41,7 +41,10 @@ const Collection = () => {
         type.includes(prod.subCategory)
       );
     }
+    setFilterProducts(productsCopy);
+  };
 
+  const sortProduct = () => {
     switch (sortValue) {
       case "low-high":
         setFilterProducts(productsCopy.sort((a, b) => a.price - b.price));
@@ -50,15 +53,14 @@ const Collection = () => {
         setFilterProducts(productsCopy.sort((a, b) => b.price - a.price));
         break;
       default:
-        setFilterProducts(productsCopy);
+        applyFilter();
         break;
     }
-
-    setFilterProducts(productsCopy);
   };
 
   useEffect(() => {
     applyFilter();
+    sortProduct();
   }, [category, type, sortValue]);
 
   return (
@@ -167,17 +169,21 @@ const Collection = () => {
         </div>
 
         {/* collection listings */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
-          {filterProducts.map((item, index) => (
-            <ProductItem
-              key={index}
-              id={item._id}
-              image={item.image}
-              name={item.name}
-              price={item.price}
-            />
-          ))}
-        </div>
+        {filterProducts[0] ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
+            {filterProducts.map((item, index) => (
+              <ProductItem
+                key={index}
+                id={item._id}
+                image={item.image}
+                name={item.name}
+                price={item.price}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center text-2xl font-bold">No product found</div>
+        )}
       </div>
     </div>
   );

@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-a.active hr{
-  display: block
+a.active hr {
+  display: block;
 }
 
 .mobile-menu a.active {

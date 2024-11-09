@@ -14,7 +14,6 @@ const SearchBar = () => {
   useEffect(() => {
     setColPath(location.pathname.includes("collection"));
     setShowSearch(false);
-    console.log(colPath);
   }, [location]);
 
   return colPath && showSearch ? (

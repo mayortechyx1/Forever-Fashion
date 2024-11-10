@@ -6,8 +6,8 @@ import ShopProvider from "./context/ShopContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <ShopProvider>
-    <StrictMode>
-      <App />
-    </StrictMode>
+    {/* <StrictMode> */}
+    <App />
+    {/* </StrictMode> */}
   </ShopProvider>
 );

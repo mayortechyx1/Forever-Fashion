@@ -6,6 +6,10 @@ a.active hr {
   display: block;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 .mobile-menu a.active {
   background-color: black;
   color: white;

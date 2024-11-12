@@ -5,19 +5,26 @@ import { assets } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const { products, currency, cartItems, deleteProduct, getCartCount } =
-    useContext(shopContext);
+  const {
+    products,
+    currency,
+    cartItems,
+    deleteProduct,
+    updateQuantity,
+    getCartCount,
+  } = useContext(shopContext);
   const [cartArray, setCartArray] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     let cartData = [];
     for (const id in cartItems) {
-      for (const size in cartItems[id]) {
+      for (const size in cartItems[id]["sizes"]) {
         cartData.push({
           _id: id,
           size,
-          quantity: cartItems[id][size],
+          price: cartItems[id]["price"],
+          quantity: cartItems[id]["sizes"][size],
         });
       }
     }
@@ -54,7 +61,7 @@ const Cart = () => {
                   <div className="flex tems-center gap-5 mt-2">
                     <p>
                       {currency}
-                      {product.price}
+                      {item.price}
                     </p>
                     <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">
                       {item.size}
@@ -63,8 +70,18 @@ const Cart = () => {
                 </div>
               </div>
               <input
+                onChange={(e) =>
+                  updateQuantity(
+                    item._id,
+                    item.size,
+                    e.target.value === "0" || e.target.value === ""
+                      ? 1
+                      : Number(e.target.value)
+                  )
+                }
+                min={1}
                 className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1"
-                type="text"
+                type="number"
                 defaultValue={item.quantity}
               />
               <img

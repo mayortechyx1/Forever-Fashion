@@ -12,28 +12,39 @@ const ShopProvider = ({ children }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
 
-  const addToCart = async (id, size) => {
+  const addToCart = async (id, size, price) => {
     if (size === "") {
       toast.warning("please select a product size");
     } else {
       let cartData = structuredClone(cartItems);
       if (cartData[id]) {
-        if (cartData[id][size]) {
-          cartData[id][size] += 1;
+        if (cartData[id]["sizes"][size]) {
+          cartData[id]["sizes"][size] += 1;
+          cartData[id]["price"] = price;
         } else {
-          cartData[id][size] = 1;
+          cartData[id]["sizes"][size] = 1;
+          cartData[id]["price"] = price;
         }
       } else {
         cartData[id] = {};
-        cartData[id][size] = 1;
+        cartData[id]["sizes"] = {};
+        cartData[id]["sizes"][size] = 1;
+        cartData[id]["price"] = price;
       }
       setCartItems(cartData);
     }
   };
 
-  const deleteProduct = (id, size) => {
+  const updateQuantity = async (id, size, quantity) => {
     let tempData = structuredClone(cartItems);
-    delete tempData[id][size];
+    tempData[id]["sizes"][size] = quantity;
+
+    setCartItems(tempData);
+  };
+
+  const deleteProduct = async (id, size) => {
+    let tempData = structuredClone(cartItems);
+    delete tempData[id]["sizes"][size];
 
     setCartItems(tempData);
   };
@@ -42,12 +53,32 @@ const ShopProvider = ({ children }) => {
     let totalCount = 0;
 
     for (const id in cartItems) {
-      for (const size in cartItems[id]) {
-        totalCount += cartItems[id][size];
+      for (const size in cartItems[id]["sizes"]) {
+        totalCount += cartItems[id]["sizes"][size];
       }
     }
     return totalCount;
   };
+
+  const getCartAmount = async () => {
+    const productCopy = products.slice();
+    let tempData = structuredClone(cartItems);
+    let totalPrice = 0;
+
+    for (const id in tempData) {
+      for (const size in tempData[id]["sizes"]) {
+        const price = tempData[id]["price"];
+        const sizePrice = price * tempData[id]["sizes"][size];
+        totalPrice += sizePrice;
+      }
+    }
+    return totalPrice;
+  };
+
+  useEffect(() => {
+    // console.log(cartItems);
+    console.log(getCartAmount());
+  }, [cartItems]);
 
   const value = {
     products,
@@ -59,8 +90,10 @@ const ShopProvider = ({ children }) => {
     setShowSearch,
     cartItems,
     addToCart,
+    updateQuantity,
     getCartCount,
     deleteProduct,
+    getCartAmount,
   };
 
   return <shopContext.Provider value={value}>{children}</shopContext.Provider>;

@@ -7,7 +7,7 @@ import RelatedProducts from "../components/RelatedProducts";
 const Product = () => {
   const { productId } = useParams();
   const { products, currency, addToCart } = useContext(shopContext);
-  const [ProdData, setProdData] = useState(false);
+  const [prodData, setProdData] = useState(false);
   const [image, setImage] = useState("");
   const [sizebox, setSizebox] = useState("");
   const prod = products.find((prod) => prod._id === productId);
@@ -21,14 +21,14 @@ const Product = () => {
     getProd();
   }, [productId]);
 
-  return ProdData ? (
+  return prodData ? (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacitiy-100">
       {/* Data */}
       <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
         {/* --------Images part----------- */}
         <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row ">
           <div className="flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
-            {ProdData.image.map((pic, index) => (
+            {prodData.image.map((pic, index) => (
               <img
                 onClick={() => setImage(pic)}
                 key={index}
@@ -44,7 +44,7 @@ const Product = () => {
         </div>
         {/* -------------Information Part--------------- */}
         <div className="flex-1">
-          <h1 className="font-medium text-2xl mt-2">{ProdData.name}</h1>
+          <h1 className="font-medium text-2xl mt-2">{prodData.name}</h1>
           <div className="flex items-center gap-1 mt-2">
             <img src={assets.star_icon} className="w-3.5" alt="" />
             <img src={assets.star_icon} className="w-3.5" alt="" />
@@ -55,13 +55,13 @@ const Product = () => {
           </div>
           <p className="mt-5 text-3xl font-medium">
             {currency}
-            {ProdData.price}
+            {prodData.price}
           </p>
-          <p className="pt-5 text-gray-500 md:w-4/5">{ProdData.description}</p>
+          <p className="pt-5 text-gray-500 md:w-4/5">{prodData.description}</p>
           <div className="flex flex-col gap-4 my-8">
             <p>Select Size</p>
             <div className="flex gap-2">
-              {ProdData.sizes.map((size, index) => (
+              {prodData.sizes.map((size, index) => (
                 <button
                   onClick={() => setSizebox(size)}
                   className={`border py-1 px-4 bg-gray-100 ${
@@ -75,7 +75,7 @@ const Product = () => {
             </div>
           </div>
           <button
-            onClick={() => addToCart(ProdData._id, sizebox)}
+            onClick={() => addToCart(prodData._id, sizebox, prodData.price)}
             className="bg-black text-white px-8 py-2 text-sm active:bg-gray-700"
           >
             ADD TO CART
@@ -116,9 +116,9 @@ const Product = () => {
 
       {/*----------- Related Products ------------ */}
       <RelatedProducts
-        id={ProdData._id}
-        category={ProdData.category}
-        type={ProdData.subCategory}
+        id={prodData._id}
+        category={prodData.category}
+        type={prodData.subCategory}
       />
     </div>
   ) : (

@@ -1,10 +1,8 @@
 import { assets } from "../assets/assets";
 import SubscriptionBox from "../components/SubscriptionBox";
 import Title from "../components/Title";
-import { useNavigate } from "react-router-dom";
 
 const Contact = () => {
-  const navigate = useNavigate();
   return (
     <div>
       <div className="text-center text-2xl pt-10 border-t">
@@ -31,10 +29,7 @@ const Contact = () => {
           <p className="text-gray-500">
             Learn more about our teams and job openings.
           </p>
-          <button
-            onClick={() => navigate("/collection")}
-            className="transition-all rounded-md hover:scale-105 border border-black px-8 py-4 text-sm hover:bg-black hover:text-white "
-          >
+          <button className="transition-all rounded-md hover:scale-105 border border-black px-8 py-4 text-sm hover:bg-black hover:text-white ">
             Explore Jobs
           </button>
         </div>

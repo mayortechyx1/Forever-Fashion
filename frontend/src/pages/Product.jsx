@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { shopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
 import RelatedProducts from "../components/RelatedProducts";
+import Title from "../components/Title";
 
 const Product = () => {
   const { productId } = useParams();
@@ -122,7 +123,11 @@ const Product = () => {
       />
     </div>
   ) : (
-    <div></div>
+    <div className="border-t pt-16">
+      <div className="text-2xl text-center">
+        <Title text1={"PRODUCT"} text2={"NOT AVAILABLE"} />
+      </div>
+    </div>
   );
 };
 

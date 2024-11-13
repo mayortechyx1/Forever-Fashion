@@ -188,7 +188,11 @@ const Collection = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center text-2xl font-bold">No product found</div>
+          <div className="border-t pt-16">
+            <div className="text-2xl text-center">
+              <Title text1={"NO"} text2={"PRODUCT FOUND"} />
+            </div>
+          </div>
         )}
       </div>
     </div>

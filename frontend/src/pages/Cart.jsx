@@ -36,9 +36,11 @@ const Cart = () => {
 
   return (
     <div className="border-t pt-14">
-      <div className="text-2xl mb-3">
-        <Title text1={"YOUR"} text2={"CART"} />
-      </div>
+      {getCartCount() > 0 && (
+        <div className="text-2xl mb-3">
+          <Title text1={"YOUR"} text2={"CART"} />
+        </div>
+      )}
       <div>
         {getCartCount() !== 0 ? (
           cartPageArray.map((item, index) => {
@@ -98,8 +100,10 @@ const Cart = () => {
             );
           })
         ) : (
-          <div className="font-bold text-2xl text-center">
-            YOUR CART IS EMPTY
+          <div className="border-t pt-16">
+            <div className="text-2xl text-center">
+              <Title text1={"YOUR CART"} text2={"IS EMPTY"} />
+            </div>
           </div>
         )}
       </div>

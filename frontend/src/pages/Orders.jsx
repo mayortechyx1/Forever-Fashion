@@ -7,7 +7,7 @@ const Orders = () => {
   const { products, cartPageArray, currency, myOrders } =
     useContext(shopContext);
 
-  return (
+  return myOrders.length > 0 ? (
     <div className="border-t pt-16">
       <div className="text-2xl">
         <Title text1={"MY"} text2={"ORDERS"} />
@@ -50,6 +50,12 @@ const Orders = () => {
             </div>
           );
         })}
+      </div>
+    </div>
+  ) : (
+    <div className="border-t pt-16">
+      <div className="text-2xl text-center">
+        <Title text1={"NO"} text2={"ORDERS"} />
       </div>
     </div>
   );

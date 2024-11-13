@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
 import { assets } from "../assets/assets";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { shopContext } from "../context/ShopContext";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
   const { showSearch, setShowSearch, getCartCount } = useContext(shopContext);
+  const navigate = useNavigate();
 
   return (
     <div className="flex items-center justify-between">
@@ -41,6 +42,7 @@ const Navbar = () => {
         />
         <div className="group relative">
           <img
+            onClick={() => navigate("/auth")}
             src={assets.profile_icon}
             className="w-5 cursor-pointer"
             alt=""

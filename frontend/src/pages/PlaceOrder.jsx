@@ -1,10 +1,12 @@
 import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
 import { assets } from "../assets/assets";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { shopContext } from "../context/ShopContext";
 
 const PlaceOrder = () => {
+  const { cartPageArray, myOrders, setMyOrders } = useContext(shopContext);
   const [method, setMethod] = useState("cod");
   const navigate = useNavigate();
 
@@ -116,8 +118,11 @@ const PlaceOrder = () => {
 
           <div className="w-full text-end mt-8">
             <button
-              onClick={() => navigate("/orders")}
-              className="bg-black text-white px-16 py-3 text-sm hover:opacity-80"
+              onClick={() => {
+                navigate("/orders");
+                setMyOrders(cartPageArray);
+              }}
+              className="transition transform hover:scale-105 rounded-md bg-black text-white px-16 py-3 text-sm hover:opacity-80"
             >
               PLACE ORDER
             </button>

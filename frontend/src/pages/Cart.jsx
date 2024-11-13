@@ -14,8 +14,9 @@ const Cart = () => {
     deleteProduct,
     updateQuantity,
     getCartCount,
+    cartPageArray,
+    setCartPageArray,
   } = useContext(shopContext);
-  const [cartArray, setCartArray] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const Cart = () => {
         });
       }
     }
-    setCartArray(cartData);
+    setCartPageArray(cartData);
   }, [cartItems]);
 
   return (
@@ -40,7 +41,7 @@ const Cart = () => {
       </div>
       <div>
         {getCartCount() !== 0 ? (
-          cartArray.map((item, index) => {
+          cartPageArray.map((item, index) => {
             const product = products.find((prod) => prod._id === item._id);
             return (
               <div
@@ -50,7 +51,7 @@ const Cart = () => {
                 <div className="flex items-start gap-6">
                   <img
                     onClick={() => navigate(`/product/${item._id}`)}
-                    className="w-16 sm:w-20 cursor-pointer"
+                    className="transition transform hover:scale-105 w-16 sm:w-20 cursor-pointer"
                     src={product.image[0]}
                     alt=""
                   />
@@ -90,7 +91,7 @@ const Cart = () => {
                 <img
                   onClick={() => deleteProduct(item._id, item.size)}
                   src={assets.bin_icon}
-                  className="w-4 mr-4 sm:w-5 cursor-pointer"
+                  className="transition transform hover:scale-110 w-4 mr-4 sm:w-5 cursor-pointer"
                   alt=""
                 />
               </div>
@@ -112,7 +113,7 @@ const Cart = () => {
                   ? toast.error("your cart is empty")
                   : navigate("/place-order")
               }
-              className="bg-black text-white text-sm my-8 px-8 py-3 hover:opacity-[0.7]"
+              className="bg-black text-white border rounded-md transition transform active:scale-105 text-sm my-8 px-8 py-3"
             >
               PROCEED TO CHECKOUT
             </button>

@@ -11,6 +11,8 @@ const ShopProvider = ({ children }) => {
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
+  const [cartPageArray, setCartPageArray] = useState([]);
+  const [myOrders, setMyOrders] = useState([]);
 
   const addToCart = async (id, size, price) => {
     if (size === "") {
@@ -94,6 +96,10 @@ const ShopProvider = ({ children }) => {
     getCartCount,
     deleteProduct,
     getCartAmount,
+    cartPageArray,
+    setCartPageArray,
+    myOrders,
+    setMyOrders,
   };
 
   return <shopContext.Provider value={value}>{children}</shopContext.Provider>;

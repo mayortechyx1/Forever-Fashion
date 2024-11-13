@@ -60,7 +60,7 @@ const ShopProvider = ({ children }) => {
     return totalCount;
   };
 
-  const getCartAmount = async () => {
+  const getCartAmount = () => {
     const productCopy = products.slice();
     let tempData = structuredClone(cartItems);
     let totalPrice = 0;
@@ -75,10 +75,10 @@ const ShopProvider = ({ children }) => {
     return totalPrice;
   };
 
-  useEffect(() => {
-    // console.log(cartItems);
-    console.log(getCartAmount());
-  }, [cartItems]);
+  // useEffect(() => {
+  //   // console.log(cartItems);
+  //   console.log(getCartAmount());
+  // }, [cartItems]);
 
   const value = {
     products,

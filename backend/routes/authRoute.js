@@ -18,6 +18,6 @@ router.post("/register", RegisterUser);
 router.post("/logout", logoutUser);
 
 // Login Admin
-router.post("/login-admin", loginAdmin);
+router.post("/admin", loginAdmin);
 
 export default router;

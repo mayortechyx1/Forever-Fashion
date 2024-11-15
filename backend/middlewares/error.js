@@ -8,8 +8,9 @@ export const errorHandler = async (err, req, res, next) => {
   }
 
   res.status(status).json({
+    success: false,
     message,
-    stack: process.env.NODE_ENV === development ? err.stack : null,
+    stack: process.env.NODE_ENV === "development" ? err.stack : null,
   });
 };
 

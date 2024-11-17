@@ -6,6 +6,7 @@ import {
   listProducts,
 } from "../controllers/productController.js";
 import upload from "../middlewares/upload.js";
+import { adminProtect } from "../middlewares/protect.js";
 
 const router = express.Router();
 
@@ -15,12 +16,13 @@ router.get("/single", getProduct);
 // Add Product
 router.post(
   "/add",
-  upload.fields(
+  upload.fields([
     { name: "image1", maxCount: 1 },
     { name: "image2", maxCount: 1 },
     { name: "image3", maxCount: 1 },
-    { name: "image4", maxCount: 1 }
-  ),
+    { name: "image4", maxCount: 1 },
+  ]),
+  adminProtect,
   addProduct
 );
 
@@ -28,6 +30,6 @@ router.post(
 router.get("/list", listProducts);
 
 // Delete Product
-router.delete("/delete", deleteProduct);
+router.delete("/delete", adminProtect, deleteProduct);
 
 export default router;

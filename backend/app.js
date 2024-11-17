@@ -6,7 +6,7 @@ import productRoute from "./routes/productRoute.js";
 import cookieParser from "cookie-parser";
 import { errorHandler, notFound } from "./middlewares/error.js";
 import connectCloudinary from "./config/cloudinary.js";
-import { protect } from "./middlewares/protect.js";
+import { userProtect, adminProtect } from "./middlewares/protect.js";
 
 // App Config
 const app = express();

@@ -72,5 +72,19 @@ export const logoutUser = asyncHandler(async (req, res, next) => {
 });
 
 export const loginAdmin = asyncHandler(async (req, res, next) => {
-  res.send("hello forever");
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    customError(res, "enter the required fields", 400);
+  }
+
+  if (
+    email === process.env.ADMIN_EMAIL &&
+    password === process.env.ADMIN_PASSWORD
+  ) {
+    generateToken(res, email + password);
+    res.status(200).json({ success: true, message: "Admin logged in" });
+  } else {
+    customError(res, "invalid credentials", 400);
+  }
 });

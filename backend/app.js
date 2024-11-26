@@ -1,5 +1,6 @@
 import express from "express";
 import colors from "colors";
+import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
 import productRoute from "./routes/productRoute.js";
@@ -14,10 +15,11 @@ const port = process.env.PORT;
 connectDB();
 connectCloudinary();
 
+app.use(cors());
+
 // Body Parser middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(cookieParser());
 
 // Server Routes

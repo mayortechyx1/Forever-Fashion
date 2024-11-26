@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -9,6 +9,9 @@ import AdminLayout from "./layouts/AdminLayout";
 import Add from "./pages/Add";
 import List from "./pages/List";
 import Orders from "./pages/Orders";
+
+export const backendUrl =
+  process.env.NODE_ENV === "development" ? "http://localhost:8000" : "";
 
 const App = () => {
   const router = createBrowserRouter(

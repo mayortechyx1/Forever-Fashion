@@ -1,12 +1,29 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { backendUrl } from "../App";
+import { toast } from "react-toastify";
 
-const Login = () => {
+const Login = ({ setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log(email, password);
+    try {
+      const res = await axios.post(backendUrl + "/api/auth/admin", {
+        email,
+        password,
+      });
+      if (res.data.success) {
+        setUser(res.data.message);
+        console.log(res.data.message);
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message);
+    }
   };
 
   return (
@@ -31,8 +48,8 @@ const Login = () => {
             <p className="text-sm font-medium text-gray-700 mb-2">Password</p>
             <input
               className="rounded-md w-full px-3 py-2 border border-gray-300 outline-none"
-              type="email"
-              placeholder="your@email.com"
+              type="password"
+              placeholder="Enter your password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}

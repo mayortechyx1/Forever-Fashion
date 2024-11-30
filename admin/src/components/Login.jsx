@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { backendUrl } from "../App";
+import { backendUrl } from "../layouts/AdminLayout";
 import { toast } from "react-toastify";
 
 const Login = ({ setUser }) => {
@@ -16,7 +16,6 @@ const Login = ({ setUser }) => {
       });
       if (res.data.success) {
         setUser(res.data.message);
-        console.log(res.data.message);
       } else {
         toast.error(res.data.message);
       }

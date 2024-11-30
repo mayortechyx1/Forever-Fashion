@@ -6,6 +6,9 @@ import Login from "../components/Login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css";
 
+export const backendUrl =
+  process.env.NODE_ENV === "development" ? "http://localhost:8000" : "";
+
 const AdminLayout = () => {
   const [user, setUser] = useState(
     localStorage.getItem("user") ? localStorage.getItem("user") : ""
@@ -14,6 +17,7 @@ const AdminLayout = () => {
   useEffect(() => {
     localStorage.setItem("user", user);
   }, [user]);
+
   return user === "" ? (
     <>
       <Login setUser={setUser} />
@@ -25,8 +29,8 @@ const AdminLayout = () => {
       <hr />
       <div className="flex w-full">
         <Sidebar />
+        <Outlet context={user} />
       </div>
-      <Outlet />
       <ToastContainer />
     </div>
   );

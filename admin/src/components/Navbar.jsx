@@ -1,7 +1,7 @@
 import React from "react";
 import { assets } from "../assets/assets";
 import axios from "axios";
-import { backendUrl } from "../App";
+import { backendUrl } from "../layouts/AdminLayout";
 
 const Navbar = ({ setUser }) => {
   const logoutHandler = async () => {
@@ -17,7 +17,7 @@ const Navbar = ({ setUser }) => {
       <img src={assets.logo} className="w-[180px]" alt="" />
       <button
         onClick={logoutHandler}
-        className="bg-gray-600 text-white px-5 py-2 sm:px-7 sm:py-2 rounded-full text-xs sm:text-sm"
+        className="bg-gray-600 text-white px-5 py-2 sm:px-7 sm:py-2 rounded-full text-xs sm:text-sm transition hover:bg-black active:scale-95 "
       >
         Logout
       </button>

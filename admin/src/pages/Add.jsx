@@ -40,7 +40,9 @@ const Add = () => {
     image4 && form.append("image4", image4);
 
     try {
-      const res = await axios.post(backendUrl + "/api/product/add", form);
+      const res = await axios.post(backendUrl + "/api/product/add", form, {
+        withCredentials: true,
+      });
       console.log(res);
     } catch (error) {
       console.log(error);

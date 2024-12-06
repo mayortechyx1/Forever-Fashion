@@ -18,7 +18,7 @@ const AdminLayout = () => {
     localStorage.setItem("user", user);
   }, [user]);
 
-  return false ? (
+  return user === "" ? (
     <>
       <Login setUser={setUser} />
       <ToastContainer />

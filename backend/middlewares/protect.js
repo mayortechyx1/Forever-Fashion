@@ -17,6 +17,7 @@ const userProtect = asyncHandler(async (req, res, next) => {
 
 const adminProtect = asyncHandler(async (req, res, next) => {
   let token = req.cookies.jwt;
+  console.log(req.cookies);
   if (!token) customError(res, "Not Authorized, no token", 401);
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);

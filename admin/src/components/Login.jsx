@@ -10,10 +10,16 @@ const Login = ({ setUser }) => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(backendUrl + "/api/auth/admin", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        backendUrl + "/api/auth/admin",
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       if (res.data.success) {
         setUser(res.data.message);
       } else {

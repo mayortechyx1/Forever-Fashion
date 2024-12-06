@@ -15,7 +15,7 @@ const port = process.env.PORT;
 connectDB();
 connectCloudinary();
 
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5174", credentials: true }));
 
 // Body Parser middlewares
 app.use(express.json());

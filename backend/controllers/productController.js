@@ -12,7 +12,7 @@ export const getProduct = asyncHandler(async (req, res, next) => {
 });
 
 export const addProduct = asyncHandler(async (req, res, next) => {
-  const { name, description, price, category, subCategory, sizes, bestSeller } =
+  const { name, description, price, category, type, sizes, bestSeller } =
     req.body;
 
   const image1 = req.files.image1 && req.files.image1[0];
@@ -38,14 +38,14 @@ export const addProduct = asyncHandler(async (req, res, next) => {
     description,
     price: Number(price),
     category,
-    subCategory,
+    type,
     sizes: JSON.parse(sizes),
     image: imagesUrl,
     bestSeller: bestSeller === "true" ? true : false,
     date: Date.now(),
   };
 
-  const product = await Product.create(product);
+  const product = await Product.create(productData);
 
   if (product) {
     res.status(201).json({ success: true, message: product });

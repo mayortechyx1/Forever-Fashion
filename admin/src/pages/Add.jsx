@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { assets } from "../assets/assets";
 import { useOutletContext } from "react-router-dom";
+import axios from "axios";
+import { backendUrl } from "../layouts/AdminLayout";
+import { toast } from "react-toastify";
 
 const Add = () => {
   const user = useOutletContext();
@@ -18,8 +21,42 @@ const Add = () => {
   const [bestseller, setBestseller] = useState(false);
   const [sizes, setSizes] = useState([]);
 
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+
+    const form = new FormData();
+
+    form.append("name", name);
+    form.append("description", description);
+    form.append("price", price);
+    form.append("category", category);
+    form.append("type", type);
+    form.append("bestseller", bestseller);
+    form.append("sizes", sizes);
+
+    image1 && form.append("image1", image1);
+    image2 && form.append("image2", image2);
+    image3 && form.append("image3", image3);
+    image4 && form.append("image4", image4);
+
+    try {
+      const res = await axios.post(backendUrl + "/api/product/add", form);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message);
+    }
+  };
+
+  // useEffect(() => {
+  //   console.log(bestseller);
+  // }, [bestseller]);
+
   return (
-    <form className="flex flex-col w-full items-start gap-3 mt-3">
+    <form
+      onSubmit={onSubmitHandler}
+      className="flex flex-col w-full items-start gap-3 mt-3"
+    >
       <div>
         <p className="flex gap-2">Upload Image</p>
         <div className="flex gap-2">
@@ -91,7 +128,7 @@ const Add = () => {
       <div>
         <p>Product description</p>
         <textarea
-          className="w-full max-w-[500px] px-3 py-2"
+          className="w-full max-w-[900px] px-3 py-2"
           type="text"
           placeholder="Write content here"
           required
@@ -136,25 +173,110 @@ const Add = () => {
       <div>
         <p className="mb-2">Product Sizes</p>
         <div className="flex gap-3">
-          <div>
-            <p className="bg-slate-200 px-3 py-1 cursor-pointer">S</p>
+          <div
+            onClick={() =>
+              setSizes((prev) =>
+                !prev.includes("S")
+                  ? [...prev, "S"]
+                  : prev.filter((item) => item !== "S")
+              )
+            }
+          >
+            <p
+              className={
+                sizes.includes("S")
+                  ? `text-white bg-black transition active:scale-95 px-3 py-1 cursor-pointer`
+                  : "bg-slate-200 px-3 py-1 cursor-pointer"
+              }
+            >
+              S
+            </p>
           </div>
-          <div>
-            <p className="bg-slate-200 px-3 py-1 cursor-pointer">M</p>
+          <div
+            onClick={() =>
+              setSizes((prev) =>
+                !prev.includes("M")
+                  ? [...prev, "M"]
+                  : prev.filter((item) => item !== "M")
+              )
+            }
+          >
+            <p
+              className={
+                sizes.includes("M")
+                  ? `text-white bg-black transition active:scale-95 px-3 py-1 cursor-pointer`
+                  : "bg-slate-200 px-3 py-1 cursor-pointer"
+              }
+            >
+              M
+            </p>
           </div>
-          <div>
-            <p className="bg-slate-200 px-3 py-1 cursor-pointer">L</p>
+          <div
+            onClick={() =>
+              setSizes((prev) =>
+                !prev.includes("L")
+                  ? [...prev, "L"]
+                  : prev.filter((item) => item !== "L")
+              )
+            }
+          >
+            <p
+              className={
+                sizes.includes("L")
+                  ? `text-white bg-black transition active:scale-95 px-3 py-1 cursor-pointer`
+                  : "bg-slate-200 px-3 py-1 cursor-pointer"
+              }
+            >
+              L
+            </p>
           </div>
-          <div>
-            <p className="bg-slate-200 px-3 py-1 cursor-pointer">XL</p>
+          <div
+            onClick={() =>
+              setSizes((prev) =>
+                !prev.includes("XL")
+                  ? [...prev, "XL"]
+                  : prev.filter((item) => item !== "XL")
+              )
+            }
+          >
+            <p
+              className={
+                sizes.includes("XL")
+                  ? `text-white bg-black transition active:scale-95 px-3 py-1 cursor-pointer`
+                  : "bg-slate-200 px-3 py-1 cursor-pointer"
+              }
+            >
+              XL
+            </p>
           </div>
-          <div>
-            <p className="bg-slate-200 px-3 py-1 cursor-pointer">XXL</p>
+          <div
+            onClick={() =>
+              setSizes((prev) =>
+                !prev.includes("XXL")
+                  ? [...prev, "XXL"]
+                  : prev.filter((item) => item !== "XXL")
+              )
+            }
+          >
+            <p
+              className={
+                sizes.includes("XXL")
+                  ? `text-white bg-black transition active:scale-95 px-3 py-1 cursor-pointer`
+                  : "bg-slate-200 px-3 py-1 cursor-pointer"
+              }
+            >
+              XXL
+            </p>
           </div>
         </div>
       </div>
       <div className="flex gap-2 mt-2">
-        <input type="checkbox" id="bestseller" />
+        <input
+          value={bestseller}
+          onChange={() => setBestseller((prev) => !prev)}
+          type="checkbox"
+          id="bestseller"
+        />
         <label className="cursor-pointer" htmlFor="bestseller">
           Add to bestseller
         </label>

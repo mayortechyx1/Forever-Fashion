@@ -2,11 +2,19 @@ import React from "react";
 import { assets } from "../assets/assets";
 import axios from "axios";
 import { backendUrl } from "../layouts/AdminLayout";
+import { toast } from "react-toastify";
 
 const Navbar = ({ setUser }) => {
   const logoutHandler = async () => {
     try {
-      const res = await axios.post(backendUrl + "/api/auth/logout");
+      const res = await axios.post(
+        backendUrl + "/api/auth/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(res.data.message);
       setUser("");
     } catch (error) {
       console.log(error);

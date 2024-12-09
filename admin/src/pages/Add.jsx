@@ -4,6 +4,7 @@ import { useOutletContext } from "react-router-dom";
 import axios from "axios";
 import { backendUrl } from "../layouts/AdminLayout";
 import { toast } from "react-toastify";
+import { products } from "../../../frontend/src/assets/assets";
 
 const Add = () => {
   const user = useOutletContext();
@@ -21,6 +22,38 @@ const Add = () => {
   const [bestseller, setBestseller] = useState(false);
   const [sizes, setSizes] = useState([]);
 
+  const addProductFile = async (e) => {
+    e.preventDefault();
+
+    products.forEach(async (prod) => {
+      const form = new FormData();
+
+      form.append("name", prod.name);
+      form.append("description", prod.description);
+      form.append("price", prod.price);
+      form.append("category", prod.category);
+      form.append("type", prod.subCategory);
+      form.append("bestSeller", prod.bestseller);
+      form.append("image", prod.image);
+      form.append("sizes", JSON.stringify(prod.sizes));
+
+      try {
+        const res = await axios.post(backendUrl + "/api/product/add", form, {
+          withCredentials: true,
+        });
+        if (res.data.success) {
+        } else {
+          toast.error(res.data.message);
+          return;
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error(error.response?.data?.message);
+      }
+    });
+    toast.success("products updated");
+  };
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
@@ -31,8 +64,8 @@ const Add = () => {
     form.append("price", price);
     form.append("category", category);
     form.append("type", type);
-    form.append("bestseller", bestseller);
-    form.append("sizes", sizes);
+    form.append("bestSeller", bestseller);
+    form.append("sizes", JSON.stringify(sizes));
 
     image1 && form.append("image1", image1);
     image2 && form.append("image2", image2);
@@ -43,7 +76,18 @@ const Add = () => {
       const res = await axios.post(backendUrl + "/api/product/add", form, {
         withCredentials: true,
       });
-      console.log(res);
+      if (res.data.success) {
+        toast.success("product added successfully");
+        setName("");
+        setDescription("");
+        setPrice("");
+        setImage1(false);
+        setImage2(false);
+        setImage3(false);
+        setImage4(false);
+      } else {
+        toast.error(res.data.message);
+      }
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message);

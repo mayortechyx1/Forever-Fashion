@@ -11,7 +11,7 @@ import { adminProtect } from "../middlewares/protect.js";
 const router = express.Router();
 
 // Get Product
-router.get("/single", getProduct);
+router.get("/single", adminProtect, getProduct);
 
 // Add Product
 router.post(
@@ -27,7 +27,7 @@ router.post(
 );
 
 // List All Products
-router.get("/list", listProducts);
+router.get("/list", adminProtect, listProducts);
 
 // Delete Product
 router.delete("/delete", adminProtect, deleteProduct);

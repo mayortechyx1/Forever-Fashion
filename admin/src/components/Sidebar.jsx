@@ -4,7 +4,7 @@ import { assets } from "../assets/assets";
 
 const Sidebar = () => {
   return (
-    <div className="w-[18%] min-h-screen border-r-2 mr-10">
+    <div className="w-[18%] min-h-screen border-r-2">
       <div>
         <NavLink
           to="/add"

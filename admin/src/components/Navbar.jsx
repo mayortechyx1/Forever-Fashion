@@ -8,7 +8,7 @@ const Navbar = ({ setUser }) => {
   const logoutHandler = async () => {
     try {
       const res = await axios.post(
-        backendUrl + "/api/auth/logout",
+        backendUrl + "/api/auth/logout-admin",
         {},
         {
           withCredentials: true,

@@ -14,7 +14,7 @@ export const loginUser = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ email });
 
   if (user && (await user.matchPasswords(password))) {
-    generateToken(res, user._id);
+    generateToken(res, user._id, "user");
     res.status(200).json({
       success: true,
       message: { _id: user._id, name: user.name, email: user.email },
@@ -50,7 +50,7 @@ export const RegisterUser = asyncHandler(async (req, res, next) => {
   });
 
   if (newUser) {
-    generateToken(res, newUser._id);
+    generateToken(res, newUser._id, "user");
     res.status(201).json({
       success: true,
       message: { _id: newUser._id, name: newUser.name, email: newUser.email },
@@ -62,13 +62,24 @@ export const RegisterUser = asyncHandler(async (req, res, next) => {
 
 export const logoutUser = asyncHandler(async (req, res, next) => {
   res
-    .clearCookie("jwt", {
+    .clearCookie("user", {
       httpOnly: true,
       secure: process.env.NODE_ENV !== "development",
       sameSite: "strict",
     })
     .status(200)
-    .json({ message: "User logged out" });
+    .json({ success: true, message: "User logged out" });
+});
+
+export const logoutAdmin = asyncHandler(async (req, res, next) => {
+  res
+    .clearCookie("admin", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== "development",
+      sameSite: "strict",
+    })
+    .status(200)
+    .json({ success: true, message: "Admin logged out" });
 });
 
 export const loginAdmin = asyncHandler(async (req, res, next) => {
@@ -82,7 +93,7 @@ export const loginAdmin = asyncHandler(async (req, res, next) => {
     email === process.env.ADMIN_EMAIL &&
     password === process.env.ADMIN_PASSWORD
   ) {
-    generateToken(res, email + password);
+    generateToken(res, email + password, "admin");
     res.status(200).json({ success: true, message: "Admin logged in" });
   } else {
     customError(res, "invalid credentials", 400);

@@ -13,7 +13,7 @@ export const currency = "$";
 
 const AdminLayout = () => {
   const [user, setUser] = useState(
-    localStorage.getItem("user") ? localStorage.getItem("user") : ""
+    localStorage.getItem("admin") ? localStorage.getItem("admin") : ""
   );
 
   const status = async () => {
@@ -39,7 +39,7 @@ const AdminLayout = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("user", user);
+    localStorage.setItem("admin", user);
   }, [user]);
 
   return user === "" ? (

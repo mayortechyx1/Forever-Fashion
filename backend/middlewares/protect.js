@@ -4,19 +4,21 @@ import User from "../models/User.js";
 import { customError } from "./error.js";
 
 const userProtect = asyncHandler(async (req, res, next) => {
-  let token = req.cookies.jwt;
+  let token = req.cookies.user;
   if (!token) customError(res, "Not Authorized, No Token", 401);
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = await User.findById({ id: decoded.id });
+
+    req.user = await User.findById({ _id: decoded.id });
     next();
   } catch (error) {
-    customError(res, "Not Authorized", 401);
+    console.log(error);
+    customError(res, "User Not Authorized", 401);
   }
 });
 
 const adminProtect = asyncHandler(async (req, res, next) => {
-  let token = req.cookies.jwt;
+  let token = req.cookies.admin;
 
   if (!token) customError(res, "Not Authorized, no token", 401);
   try {

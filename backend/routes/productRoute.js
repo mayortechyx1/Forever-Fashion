@@ -27,9 +27,9 @@ router.post(
 );
 
 // List All Products
-router.get("/list", adminProtect, listProducts);
+router.post("/list", adminProtect, listProducts);
 
 // Delete Product
-router.delete("/delete", adminProtect, deleteProduct);
+router.post("/delete", adminProtect, deleteProduct);
 
 export default router;

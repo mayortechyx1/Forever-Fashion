@@ -1,15 +1,52 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { backendUrl } from "../layouts/MainLayout";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-const Auth = () => {
+const Auth = ({ setUser }) => {
   const [currentState, setCurrentState] = useState("Login");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
-  const onSubmitHandler = (e) => {
+  const navigate = useNavigate();
+
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
-    alert("submitted");
+    try {
+      if (currentState === "Login") {
+        const res = await axios.post(
+          backendUrl + "/api/auth/login",
+          { email, password },
+          {
+            withCredentials: true,
+          }
+        );
+
+        if (res.data.success) {
+          setUser("user logged in");
+          toast.success("user logged in");
+        }
+      } else {
+        if (password !== password2) {
+          toast.error("passwords do not match");
+          return;
+        }
+        const res = await axios.post(
+          backendUrl + "/api/auth/register",
+          { name, email, password },
+          {
+            withCredentials: true,
+          }
+        );
+      }
+    } catch (error) {
+      console.log(error.response?.data?.message);
+      toast.error(error.response?.data?.message);
+      setUser("");
+    }
   };
 
   return (

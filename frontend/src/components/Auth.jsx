@@ -41,6 +41,9 @@ const Auth = ({ setUser }) => {
             withCredentials: true,
           }
         );
+        if (res.data.success) {
+          setUser("Registered User successfully");
+        }
       }
     } catch (error) {
       console.log(error.response?.data?.message);

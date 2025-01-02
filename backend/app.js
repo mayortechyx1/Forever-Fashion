@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
 import productRoute from "./routes/productRoute.js";
+import cartRoute from "./routes/cartRoute.js";
 import cookieParser from "cookie-parser";
 import { errorHandler, notFound } from "./middlewares/error.js";
 import connectCloudinary from "./config/cloudinary.js";
@@ -35,7 +36,8 @@ app.use(cookieParser());
 
 // Server Routes
 app.use("/api/auth", authRoute);
-app.use("/api/product", productRoute);
+app.use("/api/product", adminProtect, productRoute);
+app.use("/api/cart", userProtect, cartRoute);
 
 // error middleware
 app.use(notFound);

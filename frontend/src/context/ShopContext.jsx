@@ -63,7 +63,6 @@ const ShopProvider = ({ children }) => {
   };
 
   const getCartAmount = () => {
-    const productCopy = products.slice();
     let tempData = structuredClone(cartItems);
     let totalPrice = 0;
 

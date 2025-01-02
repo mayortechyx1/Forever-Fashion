@@ -6,12 +6,11 @@ import {
   listProducts,
 } from "../controllers/productController.js";
 import upload from "../middlewares/upload.js";
-import { adminProtect } from "../middlewares/protect.js";
 
 const router = express.Router();
 
 // Get Product
-router.get("/single", adminProtect, getProduct);
+router.get("/single", getProduct);
 
 // Add Product
 router.post(
@@ -22,14 +21,13 @@ router.post(
     { name: "image3", maxCount: 1 },
     { name: "image4", maxCount: 1 },
   ]),
-  adminProtect,
   addProduct
 );
 
 // List All Products
-router.post("/list", adminProtect, listProducts);
+router.post("/list", listProducts);
 
 // Delete Product
-router.post("/delete", adminProtect, deleteProduct);
+router.post("/delete", deleteProduct);
 
 export default router;

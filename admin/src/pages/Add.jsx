@@ -77,6 +77,7 @@ const Add = () => {
         withCredentials: true,
       });
       if (res.data.success) {
+        console.log(res.data.message);
         toast.success("product added successfully");
         setName("");
         setDescription("");

@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
 import productRoute from "./routes/productRoute.js";
 import cartRoute from "./routes/cartRoute.js";
+import orderRoute from "./routes/orderRoute.js";
 import cookieParser from "cookie-parser";
 import { errorHandler, notFound } from "./middlewares/error.js";
 import connectCloudinary from "./config/cloudinary.js";
@@ -38,6 +39,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoute);
 app.use("/api/product", adminProtect, productRoute);
 app.use("/api/cart", userProtect, cartRoute);
+app.use("/api/order", orderRoute);
 
 // error middleware
 app.use(notFound);
